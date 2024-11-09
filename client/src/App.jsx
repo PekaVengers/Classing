@@ -9,7 +9,6 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import Ask from "./pages/Ask";
 import { useEffect, useState } from "react";
 import QuizWrapper from "./pages/Quiz";
-import { ChatApp } from "./presenter/GraphFlow/ChatApp";
 import Home from "./pages/Home";
 import GraphFlow from "./presenter/GraphFlow/GraphFlow";
 

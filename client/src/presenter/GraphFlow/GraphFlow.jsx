@@ -1,4 +1,3 @@
-import React from "react";
 import { ChatApp } from "./ChatApp";
 
 import "./css/index.scss";
