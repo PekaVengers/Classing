@@ -6,7 +6,7 @@ import {
   EdgeEntity,
   OriginRange,
   QuestionAndAnswer,
-} from '../App'
+} from '../ChatApp'
 import {
   deepCopyAnswerObject,
   deepCopyQuestionAndAnswer,

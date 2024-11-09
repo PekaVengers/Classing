@@ -12,7 +12,7 @@ import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded'
 import HourglassTopRoundedIcon from '@mui/icons-material/HourglassTopRounded'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 
-import { AnswerObject } from '../App'
+import { AnswerObject } from '../ChatApp'
 import { ChatContext } from './Contexts'
 import {
   getTextFromModelResponse,

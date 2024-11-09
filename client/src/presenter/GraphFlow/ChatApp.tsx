@@ -19,9 +19,6 @@ import { ListDisplayFormat } from "./components/Answer";
 
 import { userProvidedAPIKey } from "./constants";
 
-import "./css/index.scss";
-import "reactflow/dist/style.css";
-
 export interface OriginRange {
   start: number;
   end: number;

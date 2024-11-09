@@ -9,7 +9,9 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import Ask from "./pages/Ask";
 import { useEffect, useState } from "react";
 import QuizWrapper from "./pages/Quiz";
-import { ChatApp } from "./presenter/GraphFlow/App";
+import { ChatApp } from "./presenter/GraphFlow/ChatApp";
+import Home from "./pages/Home";
+import GraphFlow from "./presenter/GraphFlow/GraphFlow";
 
 function App() {
   const [questions, setQuestion] = useState([]);
@@ -39,12 +41,13 @@ function App() {
               path="/quiz"
               element={<QuizWrapper questions={questions} />}
             />
+            <Route path="/" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<AdminDashboard />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/ask" element={<Ask />} />
             <Route path="/canvas" element={<Canvas />} />
             <Route path="/present" element={<Presenter />} />
-            <Route path="/graphflow" element={<ChatApp />} />
+            <Route path="/graphflow" element={<GraphFlow />} />
           </Routes>
         </div>
       </Router>

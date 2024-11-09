@@ -30,7 +30,7 @@ import {
   EdgeEntity,
   AnswerObjectEntitiesTarget,
   DebugModeContext,
-} from '../App'
+} from '../ChatApp'
 import ReactFlowComponent from '../componentsFlow/ReactFlowComponent'
 import { InterchangeContext } from './Interchange'
 import { SlideAnswerText } from './SlideAnswer'

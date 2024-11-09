@@ -8,7 +8,7 @@ import {
   NodeEntity,
   NodeEntityIndividual,
   EdgeEntity,
-} from '../App'
+} from '../ChatApp'
 import {
   EdgePair,
   findNowhereEdgeEntities,

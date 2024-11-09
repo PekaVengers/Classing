@@ -1,6 +1,6 @@
 import dagre from 'dagre'
 
-import { EdgeEntity, NodeEntity, OriginRange } from '../App'
+import { EdgeEntity, NodeEntity, OriginRange } from '../ChatApp'
 import { hardcodedNodeWidthEstimation } from '../componentsFlow/Node'
 import { hardcodedNodeSize } from '../constants'
 

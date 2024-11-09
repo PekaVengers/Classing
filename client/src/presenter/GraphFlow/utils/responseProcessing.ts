@@ -5,7 +5,7 @@ import {
   NodeEntity,
   NodeEntityIndividual,
   OriginRange,
-} from '../App'
+} from '../ChatApp'
 import { ListDisplayFormat } from '../components/Answer'
 
 export const nodeAnnotationRegex =

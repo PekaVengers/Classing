@@ -1,25 +1,13 @@
 import Spline from "@splinetool/react-spline";
 import { useState, useEffect } from "react";
 
-const SplineWrapper = ({ scene, className }) => {
-  const [splineElement, setSplineElement] = useState(null);
-
-  useEffect(() => {
-    Spline({ scene, className }).then((element) => {
-      setSplineElement(element);
-    });
-  }, [scene, className]);
-
-  return splineElement;
-};
-
 export default function Home() {
   return (
-    <main className="relative w-full h-screen">
+    <main className="relative w-screen h-screen">
       {/* Spline Scene */}
-      <SplineWrapper
+      <Spline
         scene="https://prod.spline.design/jG268ey2jKa7QVmE/scene.splinecode"
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-screen h-full"
       />
 
       <div className="absolute inset-0 w-full h-full pointer-events-none">
