@@ -1,22 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ESNext",                          // Use latest ECMAScript features
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],    // Libraries used
-    "allowJs": true,                             // Allows JavaScript files
-    "skipLibCheck": true,                        // Skips type checks on library files for faster builds
-    "strict": true,                              // Enables strict type-checking
-    "esModuleInterop": true,                     // Interoperability between CommonJS and ES Modules
-    "module": "ESNext",                          // Module system
-    "moduleResolution": "Node",                  // Node.js-style module resolution
-    "resolveJsonModule": true,                   // Allows importing .json files
-    "isolatedModules": true,                     // Ensures compatibility with Babel or swc transpilers
-    "jsx": "react-jsx",                          // JSX configuration for React
-    "incremental": true,                         // Enables incremental builds
+    "target": "ESNext", // Use latest ECMAScript features
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Libraries used
+    "allowJs": true, // Allows JavaScript files
+    "skipLibCheck": true, // Skips type checks on library files for faster builds
+    "strict": true, // Enables strict type-checking
+    "esModuleInterop": true, // Interoperability between CommonJS and ES Modules
+    "module": "ESNext", // Module system
+    "moduleResolution": "Node", // Node.js-style module resolution
+    "resolveJsonModule": true, // Allows importing .json files
+    "isolatedModules": true, // Ensures compatibility with Babel or swc transpilers
+    "jsx": "react-jsx", // JSX configuration for React
+    "incremental": true, // Enables incremental builds
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],                            // Include files in the src directory
-  "exclude": ["node_modules", "dist"]            // Exclude node_modules and dist folders
+  "include": ["src"], // Include files in the src directory
+  "exclude": ["node_modules", "dist"] // Exclude node_modules and dist folders
 }
