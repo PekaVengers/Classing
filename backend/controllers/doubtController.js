@@ -1,6 +1,6 @@
 
 const Doubt = require('../models/Doubt');
-// Get all doubts
+
 const getAllDoubts = async (req, res) => {
   try {
     const doubts = await Doubt.find();
