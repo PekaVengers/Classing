@@ -25,6 +25,8 @@ export default {
       fontFamily: {
         primary: "Inter",
         secondary: "Borel",
+        kagak: ['"Kagak"', "sans-serif"],
+        tdc: ['"TDC"', "sans-serif"],
       },
       screens: {
         xxl: "1751px",

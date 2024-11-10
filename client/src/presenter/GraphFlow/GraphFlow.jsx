@@ -1,7 +1,7 @@
 import { ChatApp } from "./ChatApp";
 
-import "./css/index.scss";
-import "reactflow/dist/style.css";
+// import "./css/index.scss";
+// import "reactflow/dist/style.css";
 
 function GraphFlow() {
   return (

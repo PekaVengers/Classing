@@ -1,15 +1,9 @@
 import {
   PopoverBody,
   PopoverButton,
-  PopoverCloseButton,
   PopoverContent,
-  PopoverFooter,
-  PopoverForm,
   PopoverHeader,
-  PopoverLabel,
   PopoverRoot,
-  PopoverSubmitButton,
-  PopoverTextarea,
   PopoverTrigger,
 } from "@/components/ui/pop-over";
 
@@ -33,50 +27,27 @@ import { Button } from "@/components/ui/button";
 import IVizLibrary from "../Viz-Library/IVizLibrary";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import DoubtModal from "./DoubtModal";
-
+import useWebSocket from "react-use-websocket";
+import { useEffect } from "react";
 export default function Toolbar() {
   const [isIVizDialogVisible, setIVizDialogVisible] = useState(false);
   const [isDoubtModalVisible, setDoubtModalVisible] = useState(false);
+  // const { timeLeft, isRunning, startCountdown } = WebTrigger();
   const navigate = useNavigate();
-  const QuickActionsPopover = () => {
-    const actions = [
-      {
-        icon: <Plus className="w-4 h-4" />,
-        label: "Doubt",
-        action: () => setDoubtModalVisible(true),
-      },
-      {
-        icon: <ImageIcon className="w-4 h-4" />,
-        label: "Embed",
-        action: () => setIVizDialogVisible(true),
-      },
-      {
-        icon: <Paintbrush className="w-4 h-4" />,
-        label: "Nudge",
-        action: () => console.log("Nudge"),
-      },
-    ];
 
-    return (
-      <PopoverRoot>
-        <PopoverTrigger>Quick Actions</PopoverTrigger>
-        <PopoverContent className="">
-          <PopoverHeader>Quick Actions</PopoverHeader>
-          <PopoverBody>
-            {actions.map((action, index) => (
-              <PopoverButton key={index} onClick={action.action}>
-                {action.icon}
-                <span>{action.label}</span>
-              </PopoverButton>
-            ))}
-          </PopoverBody>
-        </PopoverContent>
-      </PopoverRoot>
-    );
+  const WS_URL = "ws://localhost:8000";
+
+  const { sendMessage } = useWebSocket(WS_URL, {
+    onOpen: () => console.log("WebSocket Connected"),
+    shouldReconnect: () => true,
+  });
+
+  const startCountdown = () => {
+    sendMessage('{"type":"trigger"}'); // Send trigger message
   };
 
   const handleSubmit = (question) => {
-    console.log("Submitted note:", question);
+    startCountdown();
   };
 
   const handleSwitch = () => {
@@ -90,6 +61,7 @@ export default function Toolbar() {
           <Button className="rounded-md" onClick={handleSwitch}>
             Canvas Mode
           </Button>
+
           <FloatingPanelRoot>
             <FloatingPanelTrigger
               title="Add Question"
@@ -113,48 +85,52 @@ export default function Toolbar() {
               </FloatingPanelForm>
             </FloatingPanelContent>
           </FloatingPanelRoot>
-          <QuickActionsPopover />
+          <Button
+            className="rounded-md"
+            onClick={() => {
+              setDoubtModalVisible(true);
+            }}
+          >
+            Ask Doubt
+          </Button>
+          <Button
+            className="rounded-md"
+            onClick={() => setIVizDialogVisible(true)}
+          >
+            Embed IViz
+          </Button>
         </div>
+        {/* Modal Backdrop - shared between both modals */}
+        {(isIVizDialogVisible || isDoubtModalVisible) && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" />
+        )}
+
+        {/* IVizLibrary Modal */}
         {isIVizDialogVisible && (
-          <>
-            {/* Background blur overlay */}
-            <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50" />
-
-            {/* Modal Container */}
-            <div className="fixed inset-0 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-md shadow-md w-full max-w-[85vw] max-h-[85vh] transform transition-all duration-300 ease-in-out">
-                <IVizLibrary />
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-background w-full max-w-[85vw] max-h-[85vh] rounded-lg shadow-lg overflow-hidden">
+              <IVizLibrary />
+              <div className="p-4 bg-muted border-t">
                 <Button
-                  variant={"destructive"}
-                  className="mt-4 px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                  variant="destructive"
                   onClick={() => setIVizDialogVisible(false)}
                 >
                   Close
                 </Button>
               </div>
             </div>
-          </>
+          </div>
         )}
+
+        {/* DoubtModal */}
         {isDoubtModalVisible && (
-          <>
-            {/* Background blur overlay */}
-            <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50" />
-
-            {/* Modal Container */}
-            <div className="fixed inset-0 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-md shadow-md w-full max-w-[85vw] max-h-[85vh] transform transition-all duration-300 ease-in-out">
-                <DoubtModal />
-                <Button
-                  variant={"destructive"}
-                  className="mt-4 px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                  onClick={() => setIVizDialogVisible(false)}
-                >
-                  Close
-                </Button>
-              </div>
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-background w-full max-w-[85vw] max-h-[85vh] rounded-lg shadow-lg overflow-hidden">
+              <DoubtModal onClose={() => setDoubtModalVisible(false)} />
             </div>
-          </>
+          </div>
         )}
+
         <div>
           <Avatar>
             <AvatarImage></AvatarImage>

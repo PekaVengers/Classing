@@ -623,7 +623,7 @@ export const Question = () => {
           <textarea
             ref={textareaRef}
             className="question-textarea"
-            value={question}
+            value={"How to reverse the LinkedList?"}
             placeholder={'ask a question'}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
