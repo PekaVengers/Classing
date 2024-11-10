@@ -9,7 +9,9 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import Ask from "./pages/Ask";
 import { useEffect, useState } from "react";
 import QuizWrapper from "./pages/Quiz";
-import { ChatApp } from "./presenter/GraphFlow/App";
+import Home from "./pages/Home";
+import GraphFlow from "./presenter/GraphFlow/GraphFlow";
+import ProtectedRoute from "./utility/ProtectedRoutes";
 
 function App() {
   const [questions, setQuestion] = useState([]);
@@ -34,17 +36,71 @@ function App() {
       <Router>
         <div className="App min-h-screen overflow-hidden">
           <Routes>
-            <Route path="/doubts" element={<Doubts />} />
+            <Route path="/" element={<Home />} />
             <Route
               path="/quiz"
-              element={<QuizWrapper questions={questions} />}
+              element={
+                <ProtectedRoute>
+                  <QuizWrapper questions={questions} />
+                </ProtectedRoute>
+              }
             />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<AdminDashboard />} />
-            <Route path="/ask" element={<Ask />} />
-            <Route path="/canvas" element={<Canvas />} />
-            <Route path="/present" element={<Presenter />} />
-            <Route path="/graphflow" element={<ChatApp />} />
+            <Route
+              path="/doubts"
+              element={
+                <ProtectedRoute>
+                  <Doubts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/ask"
+              element={
+                <ProtectedRoute>
+                  <Ask />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/canvas"
+              element={
+                <ProtectedRoute>
+                  <Canvas />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/present"
+              element={
+                <ProtectedRoute>
+                  <Presenter />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/graphflow"
+              element={
+                <ProtectedRoute>
+                  <GraphFlow />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </Router>

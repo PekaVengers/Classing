@@ -12,7 +12,7 @@ import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded'
 import HourglassTopRoundedIcon from '@mui/icons-material/HourglassTopRounded'
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
 
-import { AnswerObject } from '../App'
+import { AnswerObject } from '../ChatApp'
 import { ChatContext } from './Contexts'
 import {
   getTextFromModelResponse,
@@ -623,7 +623,7 @@ export const Question = () => {
           <textarea
             ref={textareaRef}
             className="question-textarea"
-            value={question}
+            value={"How to reverse the LinkedList?"}
             placeholder={'ask a question'}
             onChange={handleChange}
             onKeyDown={handleKeyDown}

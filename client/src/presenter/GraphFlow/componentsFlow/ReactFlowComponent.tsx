@@ -52,7 +52,7 @@ import { ModelForMagic, globalBestModelAvailable } from '../utils/gemini'
 import { ReactFlowObjectContext } from '../components/Answer'
 import { SimpleEdge } from './SimpleEdge'
 import { InterchangeContext } from '../components/Interchange'
-import { OriginRange } from '../App'
+import { OriginRange } from '../ChatApp'
 
 const reactFlowWrapperStyle = {
   width: '100%',

@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { QuestionAndAnswer } from '../App'
+import { QuestionAndAnswer } from '../ChatApp'
 
 import { ModelForMagic } from '../utils/gemini'
 

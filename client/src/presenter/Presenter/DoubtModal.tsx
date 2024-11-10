@@ -48,6 +48,7 @@ import {
 } from "lucide-react";
 import { Loader2 } from "lucide-react";
 import Confetti from "react-confetti";
+import { Navigate, useNavigate } from "react-router-dom";
 
 // Sample data with more examples
 const doubtsData = {
@@ -122,7 +123,7 @@ const doubtsData = {
     {
       id: 6,
       summary:
-        "Key principles of **Gandhian economics** and their relevance in modern global economic systems",
+        "Key principles of **Gandhian_Economics** and their relevance in modern global economic systems",
       count: 7,
       complexity: 4,
       timeArrived: new Date("2023-05-10T10:02:00"),
@@ -137,7 +138,7 @@ const doubtsData = {
     {
       id: 7,
       summary:
-        "Impact of the **Green Revolution** on Indian agriculture and its long-term effects on soil health, water resources, and biodiversity",
+        "Impact of the **Green_Revolution** on Indian agriculture and its long-term effects on soil health, water resources, and biodiversity",
       count: 4,
       complexity: 3,
       timeArrived: new Date("2023-05-10T10:07:00"),
@@ -171,8 +172,7 @@ const doubtsData = {
     },
     {
       id: 10,
-      summary:
-        "Evaluating the effectiveness of India's **federal structure** in addressing regional disparities",
+      summary: "How to Reverse the **LinkedList** ?",
       count: 3,
       complexity: 4,
       timeArrived: new Date("2023-05-10T10:22:00"),
@@ -261,6 +261,19 @@ const DoubtItem = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const navigate = useNavigate();
+
+  const handleOnClick = (type) => {
+    if (type === "conceptual") {
+      window.location.href =
+        "http://localhost:3000/#json=hPYnls6iKkkp4CcW8clEt,Ap5-PA24lam1KKJ0kaFyXQ";
+    } else {
+      setTimeout(() => {
+        navigate("/graphflow");
+      }, 1);
+    }
+  };
+
   return (
     <motion.div
       layout
@@ -342,7 +355,11 @@ const DoubtItem = ({
               </CardContent>
               <Separator />
               <CardFooter className="pt-4">
-                <Button variant="outline" size="sm">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleOnClick(type)}
+                >
                   {type === "conceptual" ? (
                     <PenTool className="h-4 w-4 mr-2" />
                   ) : (
@@ -371,7 +388,7 @@ export default function DoubtModal({ onClose }: FloatingComponentProps) {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [isCollecting, setIsCollecting] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [timer, setTimer] = useState(3);
+  const [timer, setTimer] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [checkedDoubts, setCheckedDoubts] = useState<number[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -460,7 +477,7 @@ export default function DoubtModal({ onClose }: FloatingComponentProps) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.3 }}
-      className="fixed inset-4 bg-gradient-to-br from-background to-muted border rounded-lg shadow-lg flex flex-col"
+      className="flex flex-col h-full w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
     >
       {showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />

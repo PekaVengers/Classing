@@ -4,19 +4,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 
 export default function Profile({
-  username = "johndoe",
-  fullName = "John Doe",
+  username = "aryan",
+  fullName = "Aryan Kesarwani",
   avatarUrl = "https://i.pravatar.cc/150?u=johndoe",
-  studentId = "S12345",
-  major = "Computer Science",
+  studentId = "S12214643",
+  major = "Computer Science and Engineering",
   yearOfStudy = 3,
-  email = "john.doe@university.edu",
+  email = "aryan@srm.com",
   bio = "Passionate about coding and always eager to learn new technologies.",
 }) {
-
   return (
-    <>
-      <Card className="w-full max-w-3xl mx-auto">
+    <div className="w-screen min-h-screen flex justify-center items-center">
+      <Card className="w-full max-w-3xl mx-auto border-[1px] border-black">
         <CardHeader className="flex flex-col sm:flex-row items-center gap-4">
           <Avatar className="w-24 h-24">
             <AvatarImage src={avatarUrl} alt={fullName} />
@@ -34,22 +33,22 @@ export default function Profile({
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
+            <div className="border-[1px] border-black rounded-md py-2 px-4">
               <h3 className="font-semibold">Student ID</h3>
               <p>{studentId}</p>
             </div>
-            <div>
+            <div className="border-[1px] border-black rounded-md py-2 px-4">
               <h3 className="font-semibold">Major</h3>
               <p>{major}</p>
             </div>
-            <div>
+            <div className="border-[1px] border-black rounded-md py-2 px-4">
               <h3 className="font-semibold">Year of Study</h3>
               <p>
                 {yearOfStudy}
                 {getOrdinalSuffix(yearOfStudy)} year
               </p>
             </div>
-            <div>
+            <div className="border-[1px] border-black rounded-md py-2 px-4">
               <h3 className="font-semibold">Email</h3>
               <a
                 href={`mailto:${email}`}
@@ -59,11 +58,11 @@ export default function Profile({
               </a>
             </div>
           </div>
-          <div>
+          <div className="border-[1px] border-black rounded-md py-2 px-4">
             <h3 className="font-semibold mb-2">Bio</h3>
             <p>{bio}</p>
           </div>
-          <div>
+          <div className="border-[1px] border-black rounded-md py-2 px-4">
             <h3 className="font-semibold mb-2">Skills</h3>
             <div className="flex flex-wrap gap-2">
               <Badge>React</Badge>
@@ -77,7 +76,7 @@ export default function Profile({
           <div className="mt-4"></div>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }
 

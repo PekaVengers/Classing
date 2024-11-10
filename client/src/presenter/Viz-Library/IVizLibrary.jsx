@@ -29,14 +29,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-
+import { useNavigate } from "react-router-dom";
+import IVizFrame from "../Canvas/iVizFrame";
+import P5Embed from "./P5Embed";
 const contentItems = [
   {
     id: 1,
     title: "Visualizing Binary Search Trees",
     description:
       "Interactive visualization of Binary Search Trees, ideal for understanding search algorithms.",
-    thumbnail: "https://source.unsplash.com/random/400x300?datastructures",
+    thumbnail:
+      "https://media.geeksforgeeks.org/wp-content/cdn-uploads/20221215114732/bst-21.png",
     tags: [
       { name: "Data Structures", icon: "Tree" },
       { name: "Algorithms", icon: "FlowChart" },
@@ -55,13 +58,15 @@ const contentItems = [
     rating: 4.7,
     totalRatings: 540,
     editorsChoice: true,
+    url: `http://localhost:3000/#json=5VUH7TZrdmtTK8qUkiXzZ,qcBppxDhgSu6j_jgKUgt5g`,
   },
   {
     id: 2,
     title: "Projectile Motion Simulation",
     description:
       "Explore the fundamentals of projectile motion in classical physics through this interactive visualization.",
-    thumbnail: "https://source.unsplash.com/random/400x300?physics",
+    thumbnail:
+      "https://media.geeksforgeeks.org/wp-content/uploads/20220921201253/vv1.jpg",
     tags: [
       { name: "Physics", icon: "Physics" },
       { name: "Classical Mechanics", icon: "Orbit" },
@@ -86,7 +91,8 @@ const contentItems = [
     title: "Quick Sort Algorithm Animation",
     description:
       "Step-by-step visualization of the Quick Sort algorithm, highlighting key operations.",
-    thumbnail: "https://source.unsplash.com/random/400x300?sorting",
+    thumbnail:
+      "https://wat-images.s3.ap-south-1.amazonaws.com/images/course/ci6ldqnqthum/Quick_Sort_0.png",
     tags: [
       { name: "Sorting", icon: "Sort" },
       { name: "Algorithms", icon: "Sequence" },
@@ -111,7 +117,8 @@ const contentItems = [
     title: "Molecular Structure of Water",
     description:
       "3D interactive model of the water molecule, showcasing molecular bonds and angles.",
-    thumbnail: "https://source.unsplash.com/random/400x300?molecule",
+    thumbnail:
+      "https://cdn.kastatic.org/ka-perseus-images/c8f5a3e5a16f2fc0a4fdd54eab7204ca39f836be.png",
     tags: [
       { name: "Chemistry", icon: "Atom" },
       { name: "Molecular Structure", icon: "Bond" },
@@ -136,7 +143,8 @@ const contentItems = [
     title: "Electric Circuit Analysis",
     description:
       "Interactive circuit analysis tool to understand voltage, current, and resistance relationships.",
-    thumbnail: "https://source.unsplash.com/random/400x300?circuits",
+    thumbnail:
+      "https://cdn1.byjus.com/wp-content/uploads/2023/03/Basic-electric-circuit-1.png",
     tags: [
       { name: "Physics", icon: "Electricity" },
       { name: "Circuits", icon: "CircuitBoard" },
@@ -161,7 +169,7 @@ const contentItems = [
     title: "Breadth-First Search (BFS) in Graphs",
     description:
       "Visualize the BFS algorithm for graphs, helpful for understanding shortest path finding.",
-    thumbnail: "https://source.unsplash.com/random/400x300?graphs",
+    thumbnail: "https://i.ytimg.com/vi/oDqjPvD54Ss/maxresdefault.jpg",
     tags: [
       { name: "Data Structures", icon: "Graph" },
       { name: "Algorithms", icon: "Path" },
@@ -186,7 +194,8 @@ const contentItems = [
     title: "Organic Reaction Mechanisms",
     description:
       "Understand organic reactions with step-by-step interactive animations.",
-    thumbnail: "https://source.unsplash.com/random/400x300?organic-chemistry",
+    thumbnail:
+      "https://cdn.masterorganicchemistry.com/wp-content/uploads/2019/12/1-four-major-categories-of-reactions-in-org-1-are-acid-base-addition-substitution-elimination-key-is-to-recognize-bonds-that-form-and-break.gif",
     tags: [
       { name: "Chemistry", icon: "Beaker" },
       { name: "Organic Reactions", icon: "Flask" },
@@ -211,7 +220,8 @@ const contentItems = [
     title: "DNS Resolution Process",
     description:
       "Explore how DNS translates domain names to IP addresses in a network.",
-    thumbnail: "https://source.unsplash.com/random/400x300?networking",
+    thumbnail:
+      "https://cf-assets.www.cloudflare.com/slt3lc6tev37/1NzaAqpEFGjqTZPAS02oNv/bf7b3f305d9c35bde5c5b93a519ba6d5/what_is_a_dns_server_dns_lookup.png",
     tags: [
       { name: "Networking", icon: "Network" },
       { name: "DNS", icon: "Server" },
@@ -236,7 +246,8 @@ const contentItems = [
     title: "AVL Tree Rotations",
     description:
       "Interactive visualizations of AVL tree rotations, crucial for balanced data structures.",
-    thumbnail: "https://source.unsplash.com/random/400x300?avltree",
+    thumbnail:
+      "https://i0.wp.com/learnersbucket.com/wp-content/uploads/2021/03/AVL-Tree-in-Javascript.png?fit=768%2C500&ssl=1",
     tags: [
       { name: "Data Structures", icon: "Tree" },
       { name: "AVL Tree", icon: "Balance" },
@@ -261,7 +272,8 @@ const contentItems = [
     title: "TCP Handshake Process",
     description:
       "Visualize the 3-way handshake process in the Transmission Control Protocol.",
-    thumbnail: "https://source.unsplash.com/random/400x300?tcp",
+    thumbnail:
+      "https://source.unsplash.com/random/400x300?tcphttps://signal.avg.com/hs-fs/hubfs/Blog_Content/Avg/Signal/AVG%20Signal%20Images/What%20is%20TCPIP%20(Signal)/TCP-IP.png?width=1320&name=TCP-IP.png",
     tags: [
       { name: "Networking", icon: "Handshake" },
       { name: "TCP", icon: "Protocol" },
@@ -298,6 +310,9 @@ export default function IVizLibrary() {
   const [generatedVisualization, setGeneratedVisualization] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [activeTab, setActiveTab] = useState("search");
+  const handleIViz = (link) => {
+    window.location.href = link;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -456,24 +471,15 @@ export default function IVizLibrary() {
                             onClick={() => handleItemSelect(item)}
                           >
                             <div className="flex items-start space-x-4">
-                              <div className="relative">
+                              <div className="relative object-contain">
                                 <img
                                   src={item.thumbnail}
                                   alt=""
                                   width={120}
-                                  height={80}
-                                  className="object-cover rounded"
+                                  height={100}
+                                  className="rounded bg-gray-200"
                                   loading="lazy"
                                 />
-                                {item.editorsChoice && (
-                                  <Badge
-                                    variant="secondary"
-                                    className="absolute top-0 right-0 m-1"
-                                  >
-                                    <Award className="h-3 w-3 mr-1" />
-                                    Editors Choice
-                                  </Badge>
-                                )}
                               </div>
                               <div className="flex-1">
                                 <h2 className="font-semibold">{item.title}</h2>
@@ -617,7 +623,7 @@ export default function IVizLibrary() {
                       <BookmarkPlus className="mr-2 h-4 w-4" />
                       Save to Collection
                     </Button>
-                    <Button>
+                    <Button onClick={(_) => handleIViz(selectedItem?.url)}>
                       <ExternalLink className="mr-2 h-4 w-4" />
                       Embed
                     </Button>
@@ -707,16 +713,20 @@ export default function IVizLibrary() {
             >
               <h3 className="text-2xl font-bold">Generated Visualization</h3>
               <div className="relative rounded-lg overflow-hidden mb-4">
-                <img
-                  src={generatedVisualization}
-                  alt="Generated Visualization"
-                  width={1200}
-                  height={800}
-                  className="w-full h-auto rounded-lg"
-                />
+                <P5Embed
+                  src={
+                    "https://qmdnzkeynanpnivehrbz.supabase.co/storage/v1/object/public/sketch/sine.js"
+                  }
+                ></P5Embed>
               </div>
               <div className="flex space-x-2">
-                <Button>
+                <Button
+                  onClick={(_) =>
+                    handleIViz(
+                      "http://localhost:3000/#json=hPYnls6iKkkp4CcW8clEt,Ap5-PA24lam1KKJ0kaFyXQ"
+                    )
+                  }
+                >
                   <ExternalLink className="mr-2 h-4 w-4" />
                   Embed
                 </Button>

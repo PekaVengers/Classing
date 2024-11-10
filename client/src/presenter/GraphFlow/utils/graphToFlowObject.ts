@@ -5,7 +5,7 @@ import {
   NodeEntity,
   OriginRange,
   QuestionAndAnswerSynced,
-} from '../App'
+} from '../ChatApp'
 import { getNewEdge } from '../componentsFlow/Edge'
 import { CustomNodeData, getNewCustomNode } from '../componentsFlow/Node'
 import { styles } from '../constants'

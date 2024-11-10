@@ -41,7 +41,7 @@ import {
 } from './MagicToolbox'
 import randomPhrases from '../utils/randomPhrases'
 import { getHandleId, getNodeId } from '../utils/utils'
-import { AnswerObjectEntitiesTarget, OriginRange } from '../App'
+import { AnswerObjectEntitiesTarget, OriginRange } from '../ChatApp'
 import {
   InterchangeContext,
   NodeConceptExpansionType,

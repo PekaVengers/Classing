@@ -1,6 +1,6 @@
 import { Excalidraw, MainMenu } from "@excalidraw/excalidraw";
 import "./Canvas.css";
-import IVizFrame from "./iVizFrame";
+
 function Canvas() {
   return (
     <>
@@ -9,9 +9,6 @@ function Canvas() {
           zenModeEnabled={true}
           gridModeEnabled={true}
           validateEmbeddable={true}
-          renderEmbeddable={(data) => {
-            return <IVizFrame data={data} />;
-          }}
           renderCustomStats={() => (
             <p style={{ fontWeight: "bold" }}>Classing.com</p>
           )}
@@ -34,5 +31,4 @@ function Canvas() {
     </>
   );
 }
-
 export default Canvas;
