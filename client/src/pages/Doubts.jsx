@@ -70,8 +70,8 @@ export default function WebSocketDialog() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">WebSocket Dialog Demo</h1>
-      <p>Waiting for WebSocket message...</p>
+      <h1 className="text-2xl font-bold mb-4">Student View Screen</h1>
+      <p>Connected to Class Room K22CL</p>
 
       <Dialog open={isOpen} onOpenChange={handleClose}>
         <DialogContent className="bg-white">

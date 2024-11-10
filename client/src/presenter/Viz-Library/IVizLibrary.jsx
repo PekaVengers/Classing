@@ -32,6 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import IVizFrame from "../Canvas/iVizFrame";
 import P5Embed from "./P5Embed";
+import metaverse from "@/assets/images/metaverse.png";
 const contentItems = [
   {
     id: 1,
@@ -58,7 +59,7 @@ const contentItems = [
     rating: 4.7,
     totalRatings: 540,
     editorsChoice: true,
-    url: `http://localhost:3000/#json=5VUH7TZrdmtTK8qUkiXzZ,qcBppxDhgSu6j_jgKUgt5g`,
+    url: `http://localhost:3000/#json=Bekd6Ke8N4tjXB_tU7SeU,HUfuvxSPMrDPEf1ZVR4ouA`,
   },
   {
     id: 2,
@@ -85,6 +86,7 @@ const contentItems = [
     rating: 4.9,
     totalRatings: 380,
     editorsChoice: true,
+    url: "http://localhost:3000/#json=Ym2twTRyit6fKl5JON107,slxcvyBSUVhrw0kaIPPPXQ",
   },
   {
     id: 3,
@@ -689,7 +691,7 @@ export default function IVizLibrary() {
                 className="flex flex-col items-center justify-center h-full text-center"
               >
                 <img
-                  src="https://source.unsplash.com/random/400x300?visualization"
+                  src={metaverse}
                   alt="Select visualization"
                   width={200}
                   height={200}

@@ -56,22 +56,22 @@ const doubtsData = {
     {
       id: 1,
       summary:
-        "Understanding **photosynthesis** in **mangrove trees** and their unique adaptations to saltwater environments, including specialized root systems and salt-excretion mechanisms",
+        "Understanding **Linked_List** operations, including **insertion**, **deletion**, and **reversing** a linked list",
       count: 5,
       complexity: 3,
       timeArrived: new Date("2023-05-10T10:00:00"),
       isAiSummarized: true,
       aiRating: "Expected Doubt",
       originalDoubts: [
-        "How does photosynthesis work in mangrove trees?",
-        "What adaptations do mangroves have for photosynthesis in saltwater?",
-        "Can mangroves perform photosynthesis in high salinity environments?",
+        "How do you insert a new node in a **Linked_List**?",
+        "What is the algorithm to delete a node from a **Linked_List**?",
+        "How do you reverse a **Linked_List** in place?",
       ],
     },
     {
       id: 2,
       summary:
-        "**Significance** of the **Indus Valley Civilization** in the context of ancient Indian history and its impact on modern South Asian culture",
+        "**Time_Complexity** analysis of common sorting algorithms such as **Quick_Sort** , **Merge_Sort** , and **Bubble_Sort**",
       count: 3,
       complexity: 2,
       timeArrived: new Date("2023-05-10T10:05:00"),
@@ -81,22 +81,22 @@ const doubtsData = {
     {
       id: 3,
       summary:
-        "Exploring the concept of **plate tectonics** and its role in shaping the **Indian subcontinent**",
+        "Exploring **Binary_Search_Tree** properties and operations, including **insertion** , **deletion**, and **searching**",
       count: 4,
       complexity: 4,
       timeArrived: new Date("2023-05-10T10:10:00"),
       isAiSummarized: true,
       aiRating: "Expected Doubt",
       originalDoubts: [
-        "How did plate tectonics form the Himalayas?",
-        "What is the relationship between plate tectonics and earthquakes in India?",
-        "How does the movement of tectonic plates affect the Indian monsoon?",
+        "What is the process for inserting a node in a **Binary_Search_Tree**?",
+        "How do you delete a node in a **Binary_Search_Tree**?",
+        "How does a **Binary_Search_Tree** search for a node efficiently?",
       ],
     },
     {
       id: 4,
       summary:
-        "Understanding the process of **meiosis** and its significance in **genetic diversity**",
+        "Understanding the concept of **Hash_Tables**, their structure, and resolving **collisions**",
       count: 6,
       complexity: 3,
       timeArrived: new Date("2023-05-10T10:15:00"),
@@ -106,16 +106,16 @@ const doubtsData = {
     {
       id: 5,
       summary:
-        "Exploring the principles of **Ayurveda** and its relevance in **modern medicine**",
+        "Analyzing the working and implementation of **Dijkstra's_Algorithm** for finding the shortest path in a **weighted_graph**",
       count: 2,
-      complexity: 2,
+      complexity: 3,
       timeArrived: new Date("2023-05-10T10:20:00"),
       isAiSummarized: true,
       aiRating: "Fresh Doubt",
       originalDoubts: [
-        "What are the basic principles of Ayurveda?",
-        "How is Ayurveda being integrated into modern healthcare?",
-        "What scientific evidence supports Ayurvedic practices?",
+        "How does **Dijkstra's_Algorithm** work to find the shortest path?",
+        "What is the **time_complexity** of **Dijkstra's_Algorithm**?",
+        "Can **Dijkstra's_Algorithm** handle negative edge weights?",
       ],
     },
   ],
@@ -123,22 +123,22 @@ const doubtsData = {
     {
       id: 6,
       summary:
-        "Key principles of **Gandhian_Economics** and their relevance in modern global economic systems",
+        "Understanding the theory behind **Big_O_notation** and its role in **algorithm_analysis** for measuring time and space complexities",
       count: 7,
       complexity: 4,
       timeArrived: new Date("2023-05-10T10:02:00"),
       isAiSummarized: true,
       aiRating: "Most Asked",
       originalDoubts: [
-        "What are the main principles of Gandhian economics?",
-        "How does Gandhian economics differ from capitalism?",
-        "Can Gandhian economic principles be applied in modern India?",
+        "What is **Big_O_notation** and why is it important in **algorithm_analysis**?",
+        "How do we calculate the **time_complexity** of an algorithm using **Big_O_notation**?",
+        "Can **Big_O_notation** describe both **time** and **space_complexity**?",
       ],
     },
     {
       id: 7,
       summary:
-        "Impact of the **Green_Revolution** on Indian agriculture and its long-term effects on soil health, water resources, and biodiversity",
+        "Understanding and applying **Greedy_Algorithms** to problems like **Huffman_Coding** and **Fractional_Knapsack**",
       count: 4,
       complexity: 3,
       timeArrived: new Date("2023-05-10T10:07:00"),
@@ -148,22 +148,22 @@ const doubtsData = {
     {
       id: 8,
       summary:
-        "Analyzing the concept of **secularism** in the Indian context and its implementation challenges",
+        "The working and analysis of **Depth_First_Search** (DFS) and **Breadth_First_Search** (BFS) algorithms in **graphs**",
       count: 5,
       complexity: 4,
       timeArrived: new Date("2023-05-10T10:12:00"),
       isAiSummarized: true,
       aiRating: "Fresh Doubt",
       originalDoubts: [
-        "How does Indian secularism differ from Western secularism?",
-        "What are the main challenges to maintaining secularism in India?",
-        "How has the concept of secularism evolved in Indian politics?",
+        "What is the difference between **DFS** and **BFS** in **graph_traversal**?",
+        "How do you implement **DFS** and **BFS** in an undirected graph?",
+        "What are the time and space complexities of **DFS** and **BFS**?",
       ],
     },
     {
       id: 9,
       summary:
-        "Examining the role of **caste** in modern Indian society and its impact on social mobility",
+        "Examining the **Divide_and_Conquer** approach and its application in algorithms like **Merge_Sort** and **Quick_Sort**",
       count: 6,
       complexity: 3,
       timeArrived: new Date("2023-05-10T10:17:00"),
@@ -172,16 +172,17 @@ const doubtsData = {
     },
     {
       id: 10,
-      summary: "How to Reverse the **LinkedList** ?",
+      summary:
+        "Understanding **Dynamic_Programming** and its applications in problems like **Longest_Common_Subsequence** and **Knapsack_Problem**",
       count: 3,
       complexity: 4,
       timeArrived: new Date("2023-05-10T10:22:00"),
       isAiSummarized: true,
       aiRating: "Expected Doubt",
       originalDoubts: [
-        "How does India's federal structure address economic disparities between states?",
-        "What are the challenges in implementing national policies across diverse states?",
-        "How effective is the distribution of powers between the center and states in India?",
+        "What is **Dynamic_Programming** and how is it used to solve **overlapping_subproblems**?",
+        "How do you solve the **Knapsack_Problem** using **Dynamic_Programming**?",
+        "What is the difference between **Dynamic_Programming** and **Greedy_Algorithms**?",
       ],
     },
   ],

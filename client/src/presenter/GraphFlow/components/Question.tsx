@@ -6,32 +6,32 @@ import React, {
   useEffect,
   useRef,
   useState,
-} from 'react'
+} from "react";
 
-import AutoFixHighRoundedIcon from '@mui/icons-material/AutoFixHighRounded'
-import HourglassTopRoundedIcon from '@mui/icons-material/HourglassTopRounded'
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded'
+import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
+import HourglassTopRoundedIcon from "@mui/icons-material/HourglassTopRounded";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
-import { AnswerObject } from '../ChatApp'
-import { ChatContext } from './Contexts'
+import { AnswerObject } from "../ChatApp";
+import { ChatContext } from "./Contexts";
 import {
   getTextFromModelResponse,
   models,
   parseGeminiResponseToObjects,
   streamGeminiCompletion,
-} from '../utils/gemini'
+} from "../utils/gemini";
 import {
   predefinedPrompts,
   predefinedPromptsForParsing,
-} from '../utils/prompts'
+} from "../utils/prompts";
 import {
   getAnswerObjectId,
   helpSetQuestionAndAnswer,
   newQuestionAndAnswer,
   trimLineBreaks,
-} from '../utils/chatUtils'
-import { InterchangeContext } from './Interchange'
-import { SentenceParser, SentenceParsingJob } from '../utils/sentenceParser'
+} from "../utils/chatUtils";
+import { InterchangeContext } from "./Interchange";
+import { SentenceParser, SentenceParsingJob } from "../utils/sentenceParser";
 import {
   cleanSlideResponse,
   nodeIndividualsToNodeEntities,
@@ -40,15 +40,15 @@ import {
   RelationshipSaliency,
   removeAnnotations,
   removeLastBracket,
-} from '../utils/responseProcessing'
-import { ListDisplayFormat } from './Answer'
-import { debug } from '../constants'
+} from "../utils/responseProcessing";
+import { ListDisplayFormat } from "./Answer";
+import { debug } from "../constants";
 
-export type FinishedAnswerObjectParsingTypes = 'summary' | 'slide'
+export type FinishedAnswerObjectParsingTypes = "summary" | "slide";
 
 export const Question = () => {
   const { questionsAndAnswersCount, setQuestionsAndAnswers } =
-    useContext(ChatContext)
+    useContext(ChatContext);
   const {
     questionAndAnswer: {
       id,
@@ -58,89 +58,90 @@ export const Question = () => {
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     handleSelfCorrection,
-  } = useContext(InterchangeContext)
+  } = useContext(InterchangeContext);
 
-  const [activated, setActivated] = useState(false) // show text box or not
-  const questionItemRef = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const [activated, setActivated] = useState(false); // show text box or not
+  const questionItemRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (!activated && (questionsAndAnswersCount < 2 || answer.length > 0)) {
-      setActivated(true)
+      setActivated(true);
     }
-  }, [activated, answer.length, questionsAndAnswersCount])
+  }, [activated, answer.length, questionsAndAnswersCount]);
 
   /* -------------------------------------------------------------------------- */
 
-  const canAsk = question.length > 0 && !modelAnswering
+  const canAsk = question.length > 0 && !modelAnswering;
 
   /* -------------------------------------------------------------------------- */
 
   const autoGrow = useCallback(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'fit-content'
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
+      textareaRef.current.style.height = "fit-content";
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + "px";
     }
-  }, [])
+  }, []);
 
   const handleChange = useCallback(
     (event: ChangeEvent) => {
       if (event.target instanceof HTMLTextAreaElement) {
-        const newQuestion = event.target.value
+        const newQuestion = event.target.value;
 
-        setQuestionsAndAnswers(prevQsAndAs =>
+        setQuestionsAndAnswers((prevQsAndAs) =>
           helpSetQuestionAndAnswer(prevQsAndAs, id, {
             question: newQuestion,
-          }),
-        )
+          })
+        );
 
-        autoGrow()
+        autoGrow();
       }
     },
-    [autoGrow, id, setQuestionsAndAnswers],
-  )
+    [autoGrow, id, setQuestionsAndAnswers]
+  );
 
   useEffect(() => {
-    autoGrow()
-  }, [autoGrow])
+    autoGrow();
+  }, [autoGrow]);
 
   /* -------------------------------------------------------------------------- */
 
   // ! smart part
   const answerStorage = useRef<{
-    answer: string
-    answerObjects: AnswerObject[]
+    answer: string;
+    answerObjects: AnswerObject[];
   }>({
-    answer: '', // raw uncleaned text
+    answer: "", // raw uncleaned text
     answerObjects: [],
-  })
+  });
 
   const handleResponseError = useCallback(
     (response: any) => {
-      console.error(response.error)
+      console.error(response.error);
 
-      setQuestionsAndAnswers(prevQsAndAs =>
+      setQuestionsAndAnswers((prevQsAndAs) =>
         helpSetQuestionAndAnswer(prevQsAndAs, id, {
           // answerObjects: [], // ?
           modelStatus: {
             modelError: true,
           },
-        }),
-      )
+        })
+      );
     },
-    [id, setQuestionsAndAnswers],
-  )
+    [id, setQuestionsAndAnswers]
+  );
 
   const handleSentenceParsingResult = useCallback(
     (result: SentenceParsingJob) => {
-      const { sourceAnswerObjectId } = result
+      const { sourceAnswerObjectId } = result;
 
       const sourceAnswerObject = answerStorage.current.answerObjects.find(
-        answerObject => answerObject.id === sourceAnswerObjectId,
-      )
+        (answerObject) => answerObject.id === sourceAnswerObjectId
+      );
       if (!sourceAnswerObject || sourceAnswerObject.complete)
         // do not touch complete answer objects
-        return
+        return;
 
       answerStorage.current.answerObjects =
         answerStorage.current.answerObjects.map((a: AnswerObject) => {
@@ -148,28 +149,28 @@ export const Question = () => {
             return {
               ...a,
               complete: true,
-            }
-          } else return a
-        })
+            };
+          } else return a;
+        });
 
-      setQuestionsAndAnswers(prevQsAndAs =>
+      setQuestionsAndAnswers((prevQsAndAs) =>
         helpSetQuestionAndAnswer(prevQsAndAs, id, {
           answerObjects: answerStorage.current.answerObjects,
-        }),
-      )
+        })
+      );
     },
-    [id, setQuestionsAndAnswers],
-  )
+    [id, setQuestionsAndAnswers]
+  );
 
   const sentenceParser = useRef<SentenceParser>(
-    new SentenceParser(handleSentenceParsingResult, handleResponseError),
-  )
+    new SentenceParser(handleSentenceParsingResult, handleResponseError)
+  );
 
   /* -------------------------------------------------------------------------- */
   // ! stream graph
 
   const _groundRest = useCallback(() => {
-    setQuestionsAndAnswers(prevQsAndAs =>
+    setQuestionsAndAnswers((prevQsAndAs) =>
       helpSetQuestionAndAnswer(
         prevQsAndAs,
         id,
@@ -180,48 +181,48 @@ export const Question = () => {
             modelAnswering: true,
             modelParsing: true, // parsing starts the same time as answering
           },
-        }),
-      ),
-    )
-    answerStorage.current.answer = ''
-    answerStorage.current.answerObjects = []
+        })
+      )
+    );
+    answerStorage.current.answer = "";
+    answerStorage.current.answerObjects = [];
 
-    sentenceParser.current.reset() // ? still needed?
+    sentenceParser.current.reset(); // ? still needed?
 
-    textareaRef.current?.blur()
+    textareaRef.current?.blur();
 
     // scroll to the question item (questionItemRef)
     setTimeout(() => {
       const answerWrapper = document.querySelector(
-        `.answer-wrapper[data-id="${id}"]`,
-      )
+        `.answer-wrapper[data-id="${id}"]`
+      );
       if (answerWrapper)
         answerWrapper.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-          inline: 'nearest',
-        })
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
       // if (questionItemRef.current) {
       //   // find element with className .answer-wrapper and data-id = id
       //   questionItemRef.current.scrollIntoView({
       //     behavior: 'smooth',
       //   })
       // }
-    }, 1000)
-  }, [id, question, setQuestionsAndAnswers])
+    }, 1000);
+  }, [id, question, setQuestionsAndAnswers]);
 
   /* -------------------------------------------------------------------------- */
 
   const handleUpdateRelationshipEntities = useCallback(
     (content: string, answerObjectId: string) => {
       const answerObject = answerStorage.current.answerObjects.find(
-        a => a.id === answerObjectId,
-      )
-      if (!answerObject) return
+        (a) => a.id === answerObjectId
+      );
+      if (!answerObject) return;
 
-      const cleanedContent = removeLastBracket(content, true)
-      const nodes = parseNodes(cleanedContent, answerObjectId)
-      const edges = parseEdges(cleanedContent, answerObjectId)
+      const cleanedContent = removeLastBracket(content, true);
+      const nodes = parseNodes(cleanedContent, answerObjectId);
+      const edges = parseEdges(cleanedContent, answerObjectId);
 
       answerStorage.current.answerObjects =
         answerStorage.current.answerObjects.map(
@@ -234,10 +235,10 @@ export const Question = () => {
                   nodeEntities: nodeIndividualsToNodeEntities(nodes),
                   edgeEntities: edges,
                 },
-              }
-            } else return a
-          },
-        )
+              };
+            } else return a;
+          }
+        );
 
       // setQuestionsAndAnswers(prevQsAndAs =>
       //   helpSetQuestionAndAnswer(prevQsAndAs, id, {
@@ -245,83 +246,83 @@ export const Question = () => {
       //   })
       // )
     },
-    [],
-  )
+    []
+  );
 
   /* -------------------------------------------------------------------------- */
 
   const handleParsingCompleteAnswerObject = useCallback(
     async (answerObjectId: string) => {
       const answerObjectToCorrect = answerStorage.current.answerObjects.find(
-        a => a.id === answerObjectId,
-      )
-      if (!answerObjectToCorrect) return
+        (a) => a.id === answerObjectId
+      );
+      if (!answerObjectToCorrect) return;
 
       // self correction
       const correctedOriginTextContent = await handleSelfCorrection(
-        answerObjectToCorrect,
-      )
+        answerObjectToCorrect
+      );
       answerStorage.current.answer = answerStorage.current.answer.replace(
         answerObjectToCorrect.originText.content,
-        correctedOriginTextContent,
-      )
-      answerObjectToCorrect.originText.content = correctedOriginTextContent
+        correctedOriginTextContent
+      );
+      answerObjectToCorrect.originText.content = correctedOriginTextContent;
       handleUpdateRelationshipEntities(
         correctedOriginTextContent,
-        answerObjectId,
-      )
+        answerObjectId
+      );
 
       // set corrected answer object
-      setQuestionsAndAnswers(prevQsAndAs =>
+      setQuestionsAndAnswers((prevQsAndAs) =>
         helpSetQuestionAndAnswer(prevQsAndAs, id, {
           answer: answerStorage.current.answer,
           answerObjects: answerStorage.current.answerObjects, // TODO account for answerObjectSynced changes
-        }),
-      )
+        })
+      );
 
       /* -------------------------------------------------------------------------- */
       // parse slides and summary
       const answerObject = answerStorage.current.answerObjects.find(
-        a => a.id === answerObjectId,
-      )
-      if (!answerObject) return
+        (a) => a.id === answerObjectId
+      );
+      if (!answerObject) return;
 
       const parsingResults: {
-        [key in FinishedAnswerObjectParsingTypes]: string
+        [key in FinishedAnswerObjectParsingTypes]: string;
       } = {
-        summary: '',
-        slide: '',
-      }
+        summary: "",
+        slide: "",
+      };
 
-      let parsingError = false
+      let parsingError = false;
       await Promise.all(
-        (['summary', 'slide'] as FinishedAnswerObjectParsingTypes[]).map(
+        (["summary", "slide"] as FinishedAnswerObjectParsingTypes[]).map(
           async (parsingType: FinishedAnswerObjectParsingTypes) => {
-            if (parsingError) return
+            if (parsingError) return;
 
-            const parsingSummary = parsingType === 'summary'
+            const parsingSummary = parsingType === "summary";
 
             // ! request
             const parsingResult = await parseGeminiResponseToObjects(
               predefinedPromptsForParsing[parsingType](
                 parsingSummary
                   ? answerObject.originText.content
-                  : removeAnnotations(answerObject.originText.content),
+                  : removeAnnotations(answerObject.originText.content)
               ),
-              debug ? models.faster : models.smarter,
-            )
+              debug ? models.faster : models.smarter
+            );
 
             if (parsingResult.error) {
-              handleResponseError(parsingResult)
-              parsingError = true
-              return
+              handleResponseError(parsingResult);
+              parsingError = true;
+              return;
             }
 
             parsingResults[parsingType] =
-              getTextFromModelResponse(parsingResult)
-          },
-        ),
-      )
+              getTextFromModelResponse(parsingResult);
+          }
+        )
+      );
 
       if (!parsingError) {
         // ! complete answer object
@@ -333,22 +334,22 @@ export const Question = () => {
                 summary: {
                   content: parsingResults.summary,
                   nodeEntities: nodeIndividualsToNodeEntities(
-                    parseNodes(parsingResults.summary, answerObjectId),
+                    parseNodes(parsingResults.summary, answerObjectId)
                   ),
                   edgeEntities: parseEdges(
                     parsingResults.summary,
-                    answerObjectId,
+                    answerObjectId
                   ),
                 },
                 slide: {
                   content: cleanSlideResponse(parsingResults.slide),
                 },
                 complete: true,
-              }
-            } else return a
-          })
+              };
+            } else return a;
+          });
 
-        setQuestionsAndAnswers(prevQsAndAs =>
+        setQuestionsAndAnswers((prevQsAndAs) =>
           helpSetQuestionAndAnswer(prevQsAndAs, id, {
             answerObjects: answerStorage.current.answerObjects,
             // modelStatus: {
@@ -357,8 +358,8 @@ export const Question = () => {
             //   modelParsing: false,
             //   modelParsingComplete: true,
             // },
-          }),
-        )
+          })
+        );
       }
     },
     [
@@ -367,51 +368,51 @@ export const Question = () => {
       handleUpdateRelationshipEntities,
       id,
       setQuestionsAndAnswers,
-    ],
-  )
+    ]
+  );
 
   const handleStreamRawAnswer = useCallback(
     (data: string, freshStream = true) => {
-      const deltaContent = trimLineBreaks(data)
-      if (!deltaContent) return
+      const deltaContent = trimLineBreaks(data);
+      if (!deltaContent) return;
 
-      const aC = answerStorage.current
+      const aC = answerStorage.current;
 
       // this is the first response streamed
-      const isFirstAnswerObject = aC.answerObjects.length === 0
-      const hasLineBreaker = deltaContent.includes('\n')
+      const isFirstAnswerObject = aC.answerObjects.length === 0;
+      const hasLineBreaker = deltaContent.includes("\n");
 
       let targetLastAnswerObjectId = aC.answerObjects.length
         ? aC.answerObjects[aC.answerObjects.length - 1].id
-        : null
+        : null;
 
       // ! ground truth of the response
-      aC.answer += deltaContent
+      aC.answer += deltaContent;
       // sentenceParser.current.updateResponse(aC.answer)
 
       const _appendContentToLastAnswerObject = (content: string) => {
-        const lastObject = aC.answerObjects[aC.answerObjects.length - 1]
-        lastObject.originText.content += content
-      }
+        const lastObject = aC.answerObjects[aC.answerObjects.length - 1];
+        lastObject.originText.content += content;
+      };
 
       const preparedNewObject = {
         id: getAnswerObjectId(), // add id
         summary: {
-          content: '',
+          content: "",
           nodeEntities: [],
           edgeEntities: [],
         }, // add summary
         slide: {
-          content: '',
+          content: "",
         }, // pop empty slide
         answerObjectSynced: {
-          listDisplay: 'original' as ListDisplayFormat,
-          saliencyFilter: 'high' as RelationshipSaliency,
+          listDisplay: "original" as ListDisplayFormat,
+          saliencyFilter: "high" as RelationshipSaliency,
           collapsedNodes: [],
           sentencesBeingCorrected: [],
         },
         complete: false,
-      }
+      };
 
       // break answer into parts
       if (isFirstAnswerObject) {
@@ -423,30 +424,30 @@ export const Question = () => {
             nodeEntities: [],
             edgeEntities: [],
           },
-        })
+        });
 
-        targetLastAnswerObjectId = preparedNewObject.id
+        targetLastAnswerObjectId = preparedNewObject.id;
         ////
       } else if (hasLineBreaker) {
         // add a new answer object
         const paragraphs = deltaContent
-          .split('\n')
-          .map(c => c.trim())
-          .filter(c => c.length)
+          .split("\n")
+          .map((c) => c.trim())
+          .filter((c) => c.length);
 
-        let paragraphForNewAnswerObject = ''
+        let paragraphForNewAnswerObject = "";
 
         if (paragraphs.length === 2) {
-          paragraphForNewAnswerObject = paragraphs[1]
+          paragraphForNewAnswerObject = paragraphs[1];
           ////
           // if (!isFirstAnswerObject)
-          _appendContentToLastAnswerObject(paragraphs[0])
+          _appendContentToLastAnswerObject(paragraphs[0]);
         } else if (paragraphs.length === 1) {
-          if (deltaContent.indexOf('\n') === 0)
-            paragraphForNewAnswerObject = paragraphs[0]
+          if (deltaContent.indexOf("\n") === 0)
+            paragraphForNewAnswerObject = paragraphs[0];
           else {
             // if (!isFirstAnswerObject)
-            _appendContentToLastAnswerObject(paragraphs[0])
+            _appendContentToLastAnswerObject(paragraphs[0]);
           }
         } else {
           // do nothing now
@@ -464,29 +465,29 @@ export const Question = () => {
             nodeEntities: [],
             edgeEntities: [],
           }, // add raw text
-        })
+        });
 
         // ! finish a previous answer object
         // as the object is finished, we can start parsing it
         // adding summary, slide, relationships
         handleParsingCompleteAnswerObject(
-          aC.answerObjects[aC.answerObjects.length - 2].id,
-        )
+          aC.answerObjects[aC.answerObjects.length - 2].id
+        );
 
-        targetLastAnswerObjectId = preparedNewObject.id
+        targetLastAnswerObjectId = preparedNewObject.id;
         ////
       } else {
         // append to last answer object
-        _appendContentToLastAnswerObject(deltaContent)
+        _appendContentToLastAnswerObject(deltaContent);
       }
 
       // ! parse relationships right now
-      const lastParagraph = aC.answer.split('\n').slice(-1)[0]
+      const lastParagraph = aC.answer.split("\n").slice(-1)[0];
       if (targetLastAnswerObjectId)
         handleUpdateRelationshipEntities(
           lastParagraph,
-          targetLastAnswerObjectId,
-        )
+          targetLastAnswerObjectId
+        );
 
       // parse sentence into graph RIGHT NOW
       // if (deltaContent.includes('.')) {
@@ -504,12 +505,12 @@ export const Question = () => {
       // }
 
       // * finally, update the state
-      setQuestionsAndAnswers(prevQsAndAs =>
+      setQuestionsAndAnswers((prevQsAndAs) =>
         helpSetQuestionAndAnswer(prevQsAndAs, id, {
           answer: aC.answer,
           answerObjects: aC.answerObjects, // TODO account for answerObjectSynced changes
-        }),
-      )
+        })
+      );
 
       // scroll
       // TODO
@@ -531,44 +532,44 @@ export const Question = () => {
       handleUpdateRelationshipEntities,
       id,
       setQuestionsAndAnswers,
-    ],
-  )
+    ]
+  );
 
   // ! ASK
   const handleAskStream = useCallback(async () => {
     // * ground reset
-    _groundRest()
+    _groundRest();
 
     // * actual ask model
-    const initialPrompts = predefinedPrompts.initialAsk(question)
+    const initialPrompts = predefinedPrompts.initialAsk(question);
     // ! request
     await streamGeminiCompletion(
       initialPrompts,
       debug ? models.faster : models.smarter,
       handleStreamRawAnswer,
-      true,
-    )
+      true
+    );
     // * model done raw answering
-    console.log('model done raw answering')
-    setQuestionsAndAnswers(prevQsAndAs =>
+    console.log("model done raw answering");
+    setQuestionsAndAnswers((prevQsAndAs) =>
       helpSetQuestionAndAnswer(prevQsAndAs, id, {
         modelStatus: {
           modelAnswering: false,
           modelAnsweringComplete: true,
         },
-      }),
-    )
+      })
+    );
 
     // try to finish the last answer object
     const lastAnswerObject =
       answerStorage.current.answerObjects[
         answerStorage.current.answerObjects.length - 1
-      ]
+      ];
     if (lastAnswerObject)
-      await handleParsingCompleteAnswerObject(lastAnswerObject.id)
+      await handleParsingCompleteAnswerObject(lastAnswerObject.id);
 
     // * model done parsing
-    console.log('model done parsing')
+    console.log("model done parsing");
 
     // * start self correction
     // console.log('model start self correction')
@@ -577,15 +578,15 @@ export const Question = () => {
     //   answerStorage.current.answerObjects
     // )
 
-    setQuestionsAndAnswers(prevQsAndAs =>
+    setQuestionsAndAnswers((prevQsAndAs) =>
       helpSetQuestionAndAnswer(prevQsAndAs, id, {
         modelStatus: {
           modelParsing: false,
           modelParsingComplete: true,
-          modelInitialPrompts: [...initialPrompts.map(p => ({ ...p }))],
+          modelInitialPrompts: [...initialPrompts.map((p) => ({ ...p }))],
         },
-      }),
-    )
+      })
+    );
   }, [
     _groundRest,
     handleParsingCompleteAnswerObject,
@@ -593,25 +594,25 @@ export const Question = () => {
     id,
     question,
     setQuestionsAndAnswers,
-  ])
+  ]);
 
   /* -------------------------------------------------------------------------- */
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       // if cmd + enter
-      if (e.key === 'Enter' && e.metaKey) {
-        if (canAsk) handleAskStream()
+      if (e.key === "Enter" && e.metaKey) {
+        if (canAsk) handleAskStream();
       }
     },
-    [canAsk, handleAskStream],
-  )
+    [canAsk, handleAskStream]
+  );
 
   const handleDeleteInterchange = useCallback(() => {
-    setQuestionsAndAnswers(prevQsAndAs =>
-      prevQsAndAs.filter(qAndA => qAndA.id !== id),
-    )
-  }, [id, setQuestionsAndAnswers])
+    setQuestionsAndAnswers((prevQsAndAs) =>
+      prevQsAndAs.filter((qAndA) => qAndA.id !== id)
+    );
+  }, [id, setQuestionsAndAnswers]);
 
   return (
     <div
@@ -623,8 +624,10 @@ export const Question = () => {
           <textarea
             ref={textareaRef}
             className="question-textarea"
-            value={"How to reverse the LinkedList?"}
-            placeholder={'ask a question'}
+            value={
+              "Understanding Dynamic Programming and its applications in problems like Longest Common Subsequence and Knapsack_Problem"
+            }
+            placeholder={"ask a question"}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             rows={1}
@@ -652,7 +655,7 @@ export const Question = () => {
         <span
           className="new-question-hint"
           onClick={() => {
-            setActivated(true)
+            setActivated(true);
           }}
         >
           add question
@@ -662,5 +665,5 @@ export const Question = () => {
         <div className="error-message">Got an error, please try again.</div>
       )}
     </div>
-  )
-}
+  );
+};
