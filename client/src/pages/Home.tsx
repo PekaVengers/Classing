@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const handleOnClick = () => {
     console.log("clcick");
-    window.location.href = "/admin";
+    window.location.href = "/present";
   };
 
   return (
@@ -20,7 +20,7 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center text-white pointer-events-none backdrop:filter backdrop-brightness-50">
-        <h1 className="font-bold text-9xl font-kagak">Classing</h1>
+        <h1 className="font-bold text-9xl font-kagak">iViz</h1>
         <h2 className="text-3xl font-light text-gray-200 font-tdc">
           Upgrade Student Learning Experience
         </h2>

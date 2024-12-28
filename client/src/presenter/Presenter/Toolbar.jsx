@@ -61,7 +61,7 @@ export default function Toolbar() {
           <Button className="rounded-md" onClick={handleSwitch}>
             Canvas Mode
           </Button>
-
+          {/* 
           <FloatingPanelRoot>
             <FloatingPanelTrigger
               title="Add Question"
@@ -84,15 +84,15 @@ export default function Toolbar() {
                 </FloatingPanelFooter>
               </FloatingPanelForm>
             </FloatingPanelContent>
-          </FloatingPanelRoot>
-          <Button
+          </FloatingPanelRoot> */}
+          {/* <Button
             className="rounded-md"
             onClick={() => {
               setDoubtModalVisible(true);
             }}
           >
             Ask Doubt
-          </Button>
+          </Button> */}
           <Button
             className="rounded-md"
             onClick={() => setIVizDialogVisible(true)}
