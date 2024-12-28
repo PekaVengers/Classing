@@ -1,17 +1,18 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import "./App.css";
-import Doubts from "./pages/Doubts";
-import Profile from "./pages/Profile";
-import AdminDashboard from "./pages/AdminDashboard";
-import Canvas from "./presenter/Canvas/Canvas";
-import Presenter from "./presenter/Presenter/Presenter";
+import { Suspense, useEffect, useState, lazy } from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
-import Ask from "./pages/Ask";
-import { useEffect, useState } from "react";
-import QuizWrapper from "./pages/Quiz";
-import Home from "./pages/Home";
-import GraphFlow from "./presenter/GraphFlow/GraphFlow";
 import ProtectedRoute from "./utility/ProtectedRoutes";
+import { SplashScreen } from "./components/splash-screen";
+import Model from "./presenter/Avatar/Model";
+const Doubts = lazy(() => import("./pages/Doubts"));
+const Profile = lazy(() => import("./pages/Profile"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const Canvas = lazy(() => import("./presenter/Canvas/Canvas"));
+const Presenter = lazy(() => import("./presenter/Presenter/Presenter"));
+const Ask = lazy(() => import("./pages/Ask"));
+const QuizWrapper = lazy(() => import("./pages/Quiz"));
+const Home = lazy(() => import("./pages/Home"));
+const GraphFlow = lazy(() => import("./presenter/GraphFlow/GraphFlow"));
 
 function App() {
   const [questions, setQuestion] = useState([]);
@@ -33,77 +34,87 @@ function App() {
         redirect_uri: "http://localhost:5173/",
       }}
     >
-      <Router>
-        <div className="App min-h-screen overflow-hidden">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/quiz"
-              element={
-                <ProtectedRoute>
-                  <QuizWrapper questions={questions} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/doubts"
-              element={
-                <ProtectedRoute>
-                  <Doubts />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/ask"
-              element={
-                <ProtectedRoute>
-                  <Ask />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/canvas"
-              element={
-                <ProtectedRoute>
-                  <Canvas />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/present"
-              element={
-                <ProtectedRoute>
-                  <Presenter />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/graphflow"
-              element={
-                <ProtectedRoute>
-                  <GraphFlow />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </div>
-      </Router>
+      <Suspense fallback={<SplashScreen />}>
+        <Router>
+          <div className="App min-h-screen overflow-hidden">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/quiz"
+                element={
+                  <ProtectedRoute>
+                    <QuizWrapper questions={questions} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/doubts"
+                element={
+                  <ProtectedRoute>
+                    <Doubts />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/ask"
+                element={
+                  <ProtectedRoute>
+                    <Ask />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/canvas"
+                element={
+                  <ProtectedRoute>
+                    <Canvas />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/present"
+                element={
+                  <ProtectedRoute>
+                    <Presenter />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/graphflow"
+                element={
+                  <ProtectedRoute>
+                    <GraphFlow />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/avatar"
+                element={
+                  <div className="h-screen w-screen">
+                    <Model />
+                  </div>
+                }
+              />
+            </Routes>
+          </div>
+        </Router>
+      </Suspense>
     </Auth0Provider>
   );
 }

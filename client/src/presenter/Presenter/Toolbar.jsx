@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 
 import { useState } from "react";
@@ -7,6 +6,18 @@ import IVizLibrary from "../Viz-Library/IVizLibrary";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import DoubtModal from "./DoubtModal";
 import useWebSocket from "react-use-websocket";
+import {
+  FloatingPanelBody,
+  FloatingPanelCloseButton,
+  FloatingPanelContent,
+  FloatingPanelFooter,
+  FloatingPanelForm,
+  FloatingPanelLabel,
+  FloatingPanelRoot,
+  FloatingPanelSubmitButton,
+  FloatingPanelTextarea,
+  FloatingPanelTrigger,
+} from "@/components/ui/floating-panel";
 export default function Toolbar() {
   const [isIVizDialogVisible, setIVizDialogVisible] = useState(false);
   const [isDoubtModalVisible, setDoubtModalVisible] = useState(false);
@@ -24,9 +35,17 @@ export default function Toolbar() {
     sendMessage('{"type":"trigger"}'); // Send trigger message
   };
 
-
   const handleSwitch = () => {
     navigate("/canvas");
+  };
+
+  const handleAvatar = () => {
+    navigate("/avatar");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add your form submission logic here
   };
 
   return (
@@ -36,7 +55,9 @@ export default function Toolbar() {
           <Button className="rounded-md" onClick={handleSwitch}>
             Canvas Mode
           </Button>
-          {/* 
+          <Button className="rounded-md" onClick={handleAvatar}>
+            Avatar Mode
+          </Button>
           <FloatingPanelRoot>
             <FloatingPanelTrigger
               title="Add Question"
@@ -59,15 +80,16 @@ export default function Toolbar() {
                 </FloatingPanelFooter>
               </FloatingPanelForm>
             </FloatingPanelContent>
-          </FloatingPanelRoot> */}
-          {/* <Button
+          </FloatingPanelRoot>
+          <Button
+            variant={"primary"}
             className="rounded-md"
             onClick={() => {
               setDoubtModalVisible(true);
             }}
           >
             Ask Doubt
-          </Button> */}
+          </Button>
           <Button
             className="rounded-md"
             onClick={() => setIVizDialogVisible(true)}

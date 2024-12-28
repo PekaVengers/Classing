@@ -1,5 +1,6 @@
 import { Excalidraw, MainMenu } from "@excalidraw/excalidraw";
 import "./Canvas.css";
+import { Presentation } from "lucide-react";
 
 function Canvas() {
   return (
@@ -17,6 +18,7 @@ function Canvas() {
             <MainMenu.Item
               onSelect={() => (window.location.href = "/present")}
               shortcut="Shift+P"
+              icon={<Presentation />}
             >
               Switch to Presenter
             </MainMenu.Item>
