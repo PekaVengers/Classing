@@ -1,34 +1,12 @@
-import {
-  PopoverBody,
-  PopoverButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverRoot,
-  PopoverTrigger,
-} from "@/components/ui/pop-over";
 
 import { useNavigate } from "react-router-dom";
-import {
-  FloatingPanelCloseButton,
-  FloatingPanelContent,
-  FloatingPanelFooter,
-  FloatingPanelForm,
-  FloatingPanelLabel,
-  FloatingPanelRoot,
-  FloatingPanelSubmitButton,
-  FloatingPanelTextarea,
-  FloatingPanelTrigger,
-  FloatingPanelBody,
-} from "@/components/ui/floating-panel";
 
-import { Image as ImageIcon, Paintbrush, Plus } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import IVizLibrary from "../Viz-Library/IVizLibrary";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import DoubtModal from "./DoubtModal";
 import useWebSocket from "react-use-websocket";
-import { useEffect } from "react";
 export default function Toolbar() {
   const [isIVizDialogVisible, setIVizDialogVisible] = useState(false);
   const [isDoubtModalVisible, setDoubtModalVisible] = useState(false);
@@ -46,9 +24,6 @@ export default function Toolbar() {
     sendMessage('{"type":"trigger"}'); // Send trigger message
   };
 
-  const handleSubmit = (question) => {
-    startCountdown();
-  };
 
   const handleSwitch = () => {
     navigate("/canvas");

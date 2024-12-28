@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const handleOnClick = () => {
     console.log("clcick");
-    window.location.href = "/present";
+    window.location.href = "/admin";
   };
 
   return (

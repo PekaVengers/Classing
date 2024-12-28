@@ -9,7 +9,6 @@ import {
   Star,
   ChevronLeft,
   ChevronRight,
-  Award,
   Wand2,
   Plus,
 } from "lucide-react";
@@ -29,8 +28,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { useNavigate } from "react-router-dom";
-import IVizFrame from "../Canvas/iVizFrame";
 import P5Embed from "./P5Embed";
 import metaverse from "@/assets/images/metaverse.png";
 const contentItems = [
