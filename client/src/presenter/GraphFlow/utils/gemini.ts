@@ -11,13 +11,10 @@ declare global {
     env: ImportMetaEnv;
   }
 }
+``;
 
 const genAI = new GoogleGenerativeAI(
-  String(
-    debug
-      ? import.meta.env.VITE_REACT_APP_GEMINI_API_KEY
-      : userProvidedAPIKey.current
-  ) as string
+  String("AIzaSyAcCM6i-Q8HXCcq4LNR7X4NHB9hNHxnqEs") as string
 );
 
 export const globalBestModelAvailable = "gemini-1.5-flash";

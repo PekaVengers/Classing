@@ -136,7 +136,9 @@ export const ChatApp = ({ question }) => {
   const [debugMode, setDebugMode] = useState<boolean>(false);
   const [keyHidden, setKeyHidden] = useState<boolean>(false);
   const [geminiKeyInput, setGeminiKeyInput] = useState<string>("");
-  const [geminiKey, setGeminiKey] = useState<string>("");
+  const [geminiKey, setGeminiKey] = useState<string>(
+    import.meta.env.VITE_REACT_APP_GEMINI_API_KEY
+  );
 
   // componentDidMount
   useEffect(() => {

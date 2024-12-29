@@ -515,17 +515,17 @@ export const Question = () => {
       // scroll
       // TODO
       /*
-      const lastAnswerObject = aC.answerObjects[aC.answerObjects.length - 1]
-      const answerObjectElement = document.querySelector(
-        `.answer-text[data-id="${lastAnswerObject.id}"]`
-      )
-      if (answerObjectElement) {
-        answerObjectElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'end',
-        })
-      }
-      */
+        const lastAnswerObject = aC.answerObjects[aC.answerObjects.length - 1]
+        const answerObjectElement = document.querySelector(
+          `.answer-text[data-id="${lastAnswerObject.id}"]`
+        )
+        if (answerObjectElement) {
+          answerObjectElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end',
+          })
+        }
+        */
     },
     [
       handleParsingCompleteAnswerObject,
@@ -624,10 +624,7 @@ export const Question = () => {
           <textarea
             ref={textareaRef}
             className="question-textarea"
-            value={
-              "Understanding Dynamic Programming and its applications in problems like Longest Common Subsequence and Knapsack_Problem"
-            }
-            placeholder={"ask a question"}
+            placeholder={"Custom Prompt"}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             rows={1}
