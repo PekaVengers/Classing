@@ -18,6 +18,12 @@ import {
   FloatingPanelTextarea,
   FloatingPanelTrigger,
 } from "@/components/ui/floating-panel";
+import {
+  ExternalLink,
+  GraduationCap,
+  MessageCircleQuestion,
+  PencilRuler,
+} from "lucide-react";
 export default function Toolbar() {
   const [isIVizDialogVisible, setIVizDialogVisible] = useState(false);
   const [isDoubtModalVisible, setDoubtModalVisible] = useState(false);
@@ -50,13 +56,15 @@ export default function Toolbar() {
 
   return (
     <div className="border-2 rounded-md border-gray-200 p-2">
-      <div className="flex items-center space-x-2">
-        <div className="flex place-items-stretch space-x-2">
+      <div className="flex place-items-center space-x-2 align-middle justify-center">
+        <div className="flex place-items-stretch space-x-2 align-middle items-center">
           <Button className="rounded-md" onClick={handleSwitch}>
-            Canvas Mode
+            <PencilRuler className="mr-2" />
+            Canvas
           </Button>
-          <Button className="rounded-md" onClick={handleAvatar}>
-            Avatar Mode
+          <Button onClick={handleAvatar}>
+            <GraduationCap className="mr-2" />
+            MasterJi
           </Button>
           <FloatingPanelRoot>
             <FloatingPanelTrigger
@@ -88,12 +96,14 @@ export default function Toolbar() {
               setDoubtModalVisible(true);
             }}
           >
+            <MessageCircleQuestion className="mr-2" />
             Ask Doubt
           </Button>
           <Button
             className="rounded-md"
             onClick={() => setIVizDialogVisible(true)}
           >
+            <ExternalLink className="mr-2" />
             Embed IViz
           </Button>
         </div>
@@ -107,14 +117,14 @@ export default function Toolbar() {
           <div className="fixed inset-0 flex items-center justify-center z-50">
             <div className="bg-background w-full max-w-[85vw] max-h-[85vh] rounded-lg shadow-lg overflow-hidden">
               <IVizLibrary />
-              <div className="p-4 bg-muted border-t">
-                <Button
-                  variant="destructive"
-                  onClick={() => setIVizDialogVisible(false)}
-                >
-                  Close
-                </Button>
-              </div>
+              <Button
+                variant="destructive"
+                onClick={() => setIVizDialogVisible(false)}
+                className="absolute top-10 right-10 bg-white text-black border-none"
+              >
+                Close
+              </Button>
+              <div className="p-4 bg-muted border-t"></div>
             </div>
           </div>
         )}

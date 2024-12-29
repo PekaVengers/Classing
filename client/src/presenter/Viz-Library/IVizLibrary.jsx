@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -30,6 +30,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import P5Embed from "./P5Embed";
 import metaverse from "@/assets/images/metaverse.png";
+
 const contentItems = [
   {
     id: 1,
@@ -56,7 +57,7 @@ const contentItems = [
     rating: 4.7,
     totalRatings: 540,
     editorsChoice: true,
-    url: `http://localhost:3000/#json=Bekd6Ke8N4tjXB_tU7SeU,HUfuvxSPMrDPEf1ZVR4ouA`,
+    url: `http://localhost:3000/#json=AoqiIOIjflo2i3-_GXHw8,uLwZ9Fp--BhuxJfbDRAEWw`,
   },
   {
     id: 2,
@@ -366,73 +367,69 @@ export default function IVizLibrary() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="flex flex-col h-full w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
-    >
-      <header className="p-4 border-b bg-white dark:bg-gray-800">
-        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
-          Viz Explorer
-        </h1>
-        <p className="text-muted-foreground mb-4 flex items-center">
-          <Search className="mr-2 h-4 w-4" />
-          Search for content, filter by category, and embed in your projects
-        </p>
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
-          <TabsList>
-            <TabsTrigger value="search">Search</TabsTrigger>
-            <TabsTrigger value="generate">Generate</TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </header>
-      <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-        <aside className="w-full md:w-1/2 border-r bg-white dark:bg-gray-800">
-          {activeTab === "search" ? (
-            <>
-              <div className="p-4 space-y-4">
-                <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
-                  <div className="relative flex-grow">
-                    <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                      type="search"
-                      placeholder="Search content..."
-                      className="pl-8"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+    <ScrollArea className="h-[80vh] w-[80vw]">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col h-full w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
+      >
+        <div className="p-4 border-b bg-white dark:bg-gray-800">
+          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
+            Viz Explorer
+          </h1>
+          <p className="text-muted-foreground mb-4 flex items-center">
+            <Search className="mr-2 h-4 w-4" />
+            Search for content, filter by category, and embed in your projects
+          </p>
+        </div>
+        <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
+          <aside className="w-full md:w-1/2 border-r bg-white dark:bg-gray-800 flex flex-col">
+            {activeTab === "search" ? (
+              <>
+                <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 p-4 border-b">
+                  <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+                    <div className="relative flex-grow">
+                      <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        type="search"
+                        placeholder="Search content..."
+                        className="pl-8"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </div>
+                    <Select value={filterBy} onValueChange={setFilterBy}>
+                      <SelectTrigger className="w-full md:w-[180px]">
+                        <SelectValue placeholder="Filter by category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Categories</SelectItem>
+                        <SelectItem value="web development">
+                          Web Development
+                        </SelectItem>
+                        <SelectItem value="web design">Web Design</SelectItem>
+                        <SelectItem value="server development">
+                          server Development
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select value={sortBy} onValueChange={setSortBy}>
+                      <SelectTrigger className="w-full md:w-[180px]">
+                        <SelectValue placeholder="Sort by" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="relevance">Relevance</SelectItem>
+                        <SelectItem value="embedCount">Embed Count</SelectItem>
+                        <SelectItem value="alphabetical">
+                          Alphabetical
+                        </SelectItem>
+                        <SelectItem value="rating">Rating</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                  <Select value={filterBy} onValueChange={setFilterBy}>
-                    <SelectTrigger className="w-full md:w-[180px]">
-                      <SelectValue placeholder="Filter by category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Categories</SelectItem>
-                      <SelectItem value="web development">
-                        Web Development
-                      </SelectItem>
-                      <SelectItem value="web design">Web Design</SelectItem>
-                      <SelectItem value="server development">
-                        server Development
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Select value={sortBy} onValueChange={setSortBy}>
-                    <SelectTrigger className="w-full md:w-[180px]">
-                      <SelectValue placeholder="Sort by" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="relevance">Relevance</SelectItem>
-                      <SelectItem value="embedCount">Embed Count</SelectItem>
-                      <SelectItem value="alphabetical">Alphabetical</SelectItem>
-                      <SelectItem value="rating">Rating</SelectItem>
-                    </SelectContent>
-                  </Select>
                 </div>
-              </div>
-              <div className="max-h-[85vh]">
-                <ScrollArea>
+                <div className="flex-1 overflow-auto">
                   <AnimatePresence>
                     {isLoading
                       ? Array(3)
@@ -522,163 +519,220 @@ export default function IVizLibrary() {
                           </motion.div>
                         ))}
                   </AnimatePresence>
-                </ScrollArea>
-              </div>
-
-              <div className="p-4 border-t bg-white dark:bg-gray-800 flex justify-between items-center">
+                </div>
+                <div className="sticky bottom-0 z-10 p-4 border-t bg-white dark:bg-gray-800 flex justify-between items-center">
+                  <Button
+                    variant="outline"
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-2" />
+                    Previous
+                  </Button>
+                  <span className="text-sm text-muted-foreground">
+                    Page {currentPage} of {pageCount}
+                  </span>
+                  <Button
+                    variant="outline"
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, pageCount))
+                    }
+                    disabled={currentPage === pageCount}
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="p-4 space-y-4">
+                <Textarea
+                  placeholder="Enter your visualization prompt here..."
+                  value={promptText}
+                  onChange={(e) => setPromptText(e.target.value)}
+                  rows={4}
+                />
                 <Button
-                  variant="outline"
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                  disabled={currentPage === 1}
+                  onClick={handleGenerateVisualization}
+                  disabled={isGenerating}
+                  className="w-full"
                 >
-                  <ChevronLeft className="h-4 w-4 mr-2" />
-                  Previous
-                </Button>
-                <span className="text-sm text-muted-foreground">
-                  Page {currentPage} of {pageCount}
-                </span>
-                <Button
-                  variant="outline"
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, pageCount))
-                  }
-                  disabled={currentPage === pageCount}
-                >
-                  Next
-                  <ChevronRight className="h-4 w-4 ml-2" />
+                  {isGenerating ? (
+                    <>
+                      <Wand2 className="mr-2 h-4 w-4 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Wand2 className="mr-2 h-4 w-4" />
+                      Generate Visualization
+                    </>
+                  )}
                 </Button>
               </div>
-            </>
-          ) : (
-            <div className="p-4 space-y-4">
-              <Textarea
-                placeholder="Enter your visualization prompt here..."
-                value={promptText}
-                onChange={(e) => setPromptText(e.target.value)}
-                rows={4}
-              />
-              <Button
-                onClick={handleGenerateVisualization}
-                disabled={isGenerating}
-                className="w-full"
-              >
-                {isGenerating ? (
-                  <>
-                    <Wand2 className="mr-2 h-4 w-4 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Wand2 className="mr-2 h-4 w-4" />
-                    Generate Visualization
-                  </>
-                )}
-              </Button>
-            </div>
-          )}
-        </aside>
-        <main className="flex-1 p-4 overflow-auto bg-white dark:bg-gray-800">
-          {activeTab === "search" ? (
-            isPreviewLoading ? (
+            )}
+          </aside>
+          <main className="flex-1 p-4 overflow-auto bg-white dark:bg-gray-800">
+            {activeTab === "search" ? (
+              isPreviewLoading ? (
+                <div className="flex items-center justify-center h-full">
+                  <Skeleton className="h-[400px] w-full rounded-lg" />
+                </div>
+              ) : selectedItem ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h2 className="text-2xl font-bold">
+                        {selectedItem.title}
+                      </h2>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedItem.category} • {selectedItem.embedCount}{" "}
+                        embeds • By {selectedItem.author.name}
+                      </p>
+                      <div className="flex items-center mt-2">
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`h-4 w-4 ${
+                                i < Math.floor(selectedItem.rating)
+                                  ? "text-yellow-400 fill-current"
+                                  : "text-gray-300"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="ml-2 text-sm text-muted-foreground">
+                          {selectedItem.rating.toFixed(1)} (
+                          {selectedItem.totalRatings} ratings)
+                        </span>
+                      </div>
+                    </div>
+                    <div className="space-x-2">
+                      <Button variant="outline">
+                        <BookmarkPlus className="mr-2 h-4 w-4" />
+                        Save to Collection
+                      </Button>
+                      <Button onClick={(_) => handleIViz(selectedItem?.url)}>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Embed
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="relative rounded-lg overflow-hidden mb-4">
+                    <img
+                      src={selectedItem.thumbnail}
+                      alt=""
+                      width={1200}
+                      height={400}
+                      className="w-full h-64 object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                      <span className="text-white font-mono text-sm">
+                        v{selectedItem.version}
+                      </span>
+                    </div>
+                  </div>
+                  <Tabs defaultValue="details">
+                    <TabsList>
+                      <TabsTrigger value="details">Details</TabsTrigger>
+                      <TabsTrigger value="code">Code</TabsTrigger>
+                      <TabsTrigger value="license">License</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="details">
+                      <p className="text-muted-foreground mb-4">
+                        {selectedItem.description}
+                      </p>
+                      <Separator className="my-4" />
+                      <div className="flex flex-wrap gap-2">
+                        {selectedItem.tags.map((tag) => (
+                          <Badge key={tag.name} variant="secondary">
+                            {tag.icon && (
+                              <span
+                                className={`mr-1 ${tag.icon.toLowerCase()}`}
+                              >
+                                {tag.icon}
+                              </span>
+                            )}
+                            {tag.name}
+                          </Badge>
+                        ))}
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="code">
+                      <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
+                        <code>{selectedItem.embedCode}</code>
+                      </pre>
+                    </TabsContent>
+                    <TabsContent value="license">
+                      <p>
+                        This content is licensed under the{" "}
+                        {selectedItem.license} license.
+                      </p>
+                    </TabsContent>
+                  </Tabs>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center justify-center h-full text-center"
+                >
+                  <img
+                    src={metaverse}
+                    alt="Select visualization"
+                    width={200}
+                    height={200}
+                    className="mb-4"
+                  />
+                  <p className="text-muted-foreground">
+                    Select a visualization to preview or generate a new one
+                  </p>
+                </motion.div>
+              )
+            ) : isGenerating ? (
               <div className="flex items-center justify-center h-full">
-                <Skeleton className="h-[400px] w-full rounded-lg" />
+                <Wand2 className="h-12 w-12 animate-spin text-primary" />
               </div>
-            ) : selectedItem ? (
+            ) : generatedVisualization ? (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
+                className="space-y-4"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h2 className="text-2xl font-bold">{selectedItem.title}</h2>
-                    <p className="text-sm text-muted-foreground">
-                      {selectedItem.category} • {selectedItem.embedCount} embeds
-                      • By {selectedItem.author.name}
-                    </p>
-                    <div className="flex items-center mt-2">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`h-4 w-4 ${
-                              i < Math.floor(selectedItem.rating)
-                                ? "text-yellow-400 fill-current"
-                                : "text-gray-300"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <span className="ml-2 text-sm text-muted-foreground">
-                        {selectedItem.rating.toFixed(1)} (
-                        {selectedItem.totalRatings} ratings)
-                      </span>
-                    </div>
-                  </div>
-                  <div className="space-x-2">
-                    <Button variant="outline">
-                      <BookmarkPlus className="mr-2 h-4 w-4" />
-                      Save to Collection
-                    </Button>
-                    <Button onClick={(_) => handleIViz(selectedItem?.url)}>
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Embed
-                    </Button>
-                  </div>
-                </div>
+                <h3 className="text-2xl font-bold">Generated Visualization</h3>
                 <div className="relative rounded-lg overflow-hidden mb-4">
-                  <img
-                    src={selectedItem.thumbnail}
-                    alt=""
-                    width={1200}
-                    height={400}
-                    className="w-full h-64 object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                    <span className="text-white font-mono text-sm">
-                      v{selectedItem.version}
-                    </span>
-                  </div>
+                  <P5Embed
+                    src={
+                      "https://qmdnzkeynanpnivehrbz.supabase.co/storage/v1/object/public/sketch/sine.js"
+                    }
+                  ></P5Embed>
                 </div>
-                <Tabs defaultValue="details">
-                  <TabsList>
-                    <TabsTrigger value="details">Details</TabsTrigger>
-                    <TabsTrigger value="code">Code</TabsTrigger>
-                    <TabsTrigger value="license">License</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="details">
-                    <p className="text-muted-foreground mb-4">
-                      {selectedItem.description}
-                    </p>
-                    <Separator className="my-4" />
-                    <div className="flex flex-wrap gap-2">
-                      {selectedItem.tags.map((tag) => (
-                        <Badge key={tag.name} variant="secondary">
-                          {tag.icon && (
-                            <span className={`mr-1 ${tag.icon.toLowerCase()}`}>
-                              {tag.icon}
-                            </span>
-                          )}
-                          {tag.name}
-                        </Badge>
-                      ))}
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="code">
-                    <pre className="bg-muted p-4 rounded-lg overflow-x-auto">
-                      <code>{selectedItem.embedCode}</code>
-                    </pre>
-                  </TabsContent>
-                  <TabsContent value="license">
-                    <p>
-                      This content is licensed under the {selectedItem.license}{" "}
-                      license.
-                    </p>
-                  </TabsContent>
-                </Tabs>
+                <div className="flex space-x-2">
+                  <Button
+                    onClick={(_) =>
+                      handleIViz(
+                        "http://localhost:3000/#json=hPYnls6iKkkp4CcW8clEt,Ap5-PA24lam1KKJ0kaFyXQ"
+                      )
+                    }
+                  >
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Embed
+                  </Button>
+                  <Button variant="outline">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add to Visualizations
+                  </Button>
+                </div>
               </motion.div>
             ) : (
               <motion.div
@@ -687,69 +741,16 @@ export default function IVizLibrary() {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col items-center justify-center h-full text-center"
               >
-                <img
-                  src={metaverse}
-                  alt="Select visualization"
-                  width={200}
-                  height={200}
-                  className="mb-4"
-                />
+                <Wand2 className="h-12 w-12 mb-4 text-primary" />
                 <p className="text-muted-foreground">
-                  Select a visualization to preview or generate a new one
+                  Enter a prompt and click Generate to create a visualization
                 </p>
               </motion.div>
-            )
-          ) : isGenerating ? (
-            <div className="flex items-center justify-center h-full">
-              <Wand2 className="h-12 w-12 animate-spin text-primary" />
-            </div>
-          ) : generatedVisualization ? (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="space-y-4"
-            >
-              <h3 className="text-2xl font-bold">Generated Visualization</h3>
-              <div className="relative rounded-lg overflow-hidden mb-4">
-                <P5Embed
-                  src={
-                    "https://qmdnzkeynanpnivehrbz.supabase.co/storage/v1/object/public/sketch/sine.js"
-                  }
-                ></P5Embed>
-              </div>
-              <div className="flex space-x-2">
-                <Button
-                  onClick={(_) =>
-                    handleIViz(
-                      "http://localhost:3000/#json=hPYnls6iKkkp4CcW8clEt,Ap5-PA24lam1KKJ0kaFyXQ"
-                    )
-                  }
-                >
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Embed
-                </Button>
-                <Button variant="outline">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add to Visualizations
-                </Button>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col items-center justify-center h-full text-center"
-            >
-              <Wand2 className="h-12 w-12 mb-4 text-primary" />
-              <p className="text-muted-foreground">
-                Enter a prompt and click Generate to create a visualization
-              </p>
-            </motion.div>
-          )}
-        </main>
-      </div>
-    </motion.div>
+            )}
+          </main>
+        </div>
+      </motion.div>
+      <ScrollBar />
+    </ScrollArea>
   );
 }

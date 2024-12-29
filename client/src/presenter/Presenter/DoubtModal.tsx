@@ -56,7 +56,7 @@ const doubtsData = {
     {
       id: 1,
       summary:
-        "Understanding **Linked_List** operations, including **insertion**, **deletion**, and **reversing** a linked list",
+        "Understanding **Linked_List** operations, including **insertion** , **deletion** , and **reversing** a linked list",
       count: 5,
       complexity: 3,
       timeArrived: new Date("2023-05-10T10:00:00"),
@@ -81,7 +81,7 @@ const doubtsData = {
     {
       id: 3,
       summary:
-        "Exploring **Binary_Search_Tree** properties and operations, including **insertion** , **deletion**, and **searching**",
+        "Exploring **Binary_Search_Tree** properties and operations, including **insertion** , **deletion** , and **searching**",
       count: 4,
       complexity: 4,
       timeArrived: new Date("2023-05-10T10:10:00"),
@@ -96,7 +96,7 @@ const doubtsData = {
     {
       id: 4,
       summary:
-        "Understanding the concept of **Hash_Tables**, their structure, and resolving **collisions**",
+        "Understanding the concept of **Hash_Tables** , their structure, and resolving **collisions**",
       count: 6,
       complexity: 3,
       timeArrived: new Date("2023-05-10T10:15:00"),
@@ -367,8 +367,8 @@ const DoubtItem = ({
                     <BookOpen className="h-4 w-4 mr-2" />
                   )}
                   {type === "conceptual"
-                    ? "Open in IViz"
-                    : "Open in Graphalogue"}
+                    ? "Open iViz in Canvas"
+                    : "Open in GraphFlow"}
                 </Button>
               </CardFooter>
             </motion.div>
@@ -385,7 +385,7 @@ interface FloatingComponentProps {
 
 export default function DoubtModal({ onClose }: FloatingComponentProps) {
   const [activeTab, setActiveTab] = useState("conceptual");
-  const [sortBy, setSortBy] = useState("count");
+  const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [isCollecting, setIsCollecting] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -460,7 +460,7 @@ export default function DoubtModal({ onClose }: FloatingComponentProps) {
   }, [activeTab, sortBy, sortOrder, searchTerm, checkedDoubts]);
 
   const loadingMessages = [
-    "Analyzing student queries...",
+    "Analyzing student queries",
     "Categorizing doubts by complexity...",
     "Identifying common themes...",
     "Preparing AI summaries...",
@@ -478,12 +478,12 @@ export default function DoubtModal({ onClose }: FloatingComponentProps) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.3 }}
-      className="flex flex-col h-full w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
+      className="flex flex-col h-full w-full dark:from-gray-900 dark:to-gray-800 rounded-lg min-h-[650px]" // Set minimum height here
     >
       {showConfetti && (
         <Confetti width={window.innerWidth} height={window.innerHeight} />
       )}
-      <div className="flex justify-between items-center p-4 border-b bg-gradient-to-r from-primary/10 to-primary/5">
+      <div className="flex justify-between items-center p-4 border-b">
         <h2 className="text-2xl font-bold">Student Doubts</h2>
         <Button variant="ghost" size="icon" onClick={onClose}>
           <X className="h-6 w-6" />
@@ -553,16 +553,29 @@ export default function DoubtModal({ onClose }: FloatingComponentProps) {
                 className="w-48"
               />
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-[180px]">
-                  {({ open }) => <SelectValue placeholder="Sort by" />}
+                <SelectTrigger className="w-[180px] text-black">
+                  <SelectValue placeholder="Sort by">
+                    {sortBy && (
+                      <span className="text-black">
+                        {sortBy === "count"
+                          ? "Most Asked"
+                          : sortBy === "complexity"
+                            ? "Complexity"
+                            : sortBy === "time"
+                              ? "Time Arrived"
+                              : "Doubt Length"}
+                      </span>
+                    )}
+                  </SelectValue>
                 </SelectTrigger>
-                <SelectContent className="max-h-[200px] overflow-y-auto">
+                <SelectContent className="max-h-[200px] overflow-y-auto text-black">
                   <SelectItem value="count">Most Asked</SelectItem>
                   <SelectItem value="complexity">Complexity</SelectItem>
                   <SelectItem value="time">Time Arrived</SelectItem>
                   <SelectItem value="length">Doubt Length</SelectItem>
                 </SelectContent>
               </Select>
+
               <Button
                 variant="outline"
                 size="icon"
@@ -584,7 +597,7 @@ export default function DoubtModal({ onClose }: FloatingComponentProps) {
               Progress: {Math.round(progressPercentage)}% doubts tackled
             </p>
           </div>
-          <ScrollArea className="flex-grow">
+          <ScrollArea className="flex-grow overflow-y-auto">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab + sortBy + sortOrder + searchTerm}

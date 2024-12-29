@@ -11,7 +11,7 @@ function Canvas() {
           gridModeEnabled={true}
           validateEmbeddable={true}
           renderCustomStats={() => (
-            <p style={{ fontWeight: "bold" }}>Classing.com</p>
+            <p style={{ fontWeight: "bold" }}>iViz</p>
           )}
         >
           <MainMenu>

@@ -42,65 +42,65 @@ function App() {
               <Route
                 path="/quiz"
                 element={
-                  <ProtectedRoute>
-                    <QuizWrapper questions={questions} />
-                  </ProtectedRoute>
+                  //<ProtectedRoute>
+                  <QuizWrapper questions={questions} />
+                  //</ProtectedRoute>
                 }
               />
               <Route
                 path="/doubts"
                 element={
-                  <ProtectedRoute>
-                    <Doubts />
-                  </ProtectedRoute>
+                  //<ProtectedRoute>
+                  <Doubts />
+                  //</ProtectedRoute>
                 }
               />
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
+                  //<ProtectedRoute>
+                  <Profile />
+                  //</ProtectedRoute>
                 }
               />
               <Route
                 path="/admin"
                 element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
+                  //   //<ProtectedRoute>
+                  <AdminDashboard />
+                  //  //</ProtectedRoute>
                 }
               />
               <Route
                 path="/ask"
                 element={
-                  <ProtectedRoute>
-                    <Ask />
-                  </ProtectedRoute>
+                  //   //<ProtectedRoute>
+                  <Ask />
+                  //  //</ProtectedRoute>
                 }
               />
               <Route
                 path="/canvas"
                 element={
-                  <ProtectedRoute>
-                    <Canvas />
-                  </ProtectedRoute>
+                  //<ProtectedRoute>
+                  <Canvas />
+                  //</ProtectedRoute>
                 }
               />
               <Route
                 path="/present"
                 element={
-                  <ProtectedRoute>
-                    <Presenter />
-                  </ProtectedRoute>
+                  //<ProtectedRoute>
+                  <Presenter />
+                  //</ProtectedRoute>
                 }
               />
               <Route
                 path="/graphflow"
                 element={
-                  <ProtectedRoute>
-                    <GraphFlow />
-                  </ProtectedRoute>
+                  //<ProtectedRoute>
+                  <GraphFlow />
+                  //</ProtectedRoute>
                 }
               />
               <Route
